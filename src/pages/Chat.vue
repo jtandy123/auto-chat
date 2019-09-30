@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="navbar">
-      <span class="navbar-text">{{title}}</span>
+      <span class="navbar-text">{{ title }}</span>
     </div>
 
     <div class="content">
@@ -22,7 +22,7 @@ import ChatItem from '../components/ChatItem.vue'
 export default {
   data () {
     return {
-      title: '和Andy聊天中...',
+      title: '聊天中...',
       inputDisable: true, // 是否正在输入
       chatDatas: [], // 所有的聊天数据
       selectMsgData: {}, // 选中的聊天数据
@@ -42,14 +42,14 @@ export default {
     },
     // 获取聊天数据
     loadChatData () {
-      this.$http.get('../../static/chatData.json').then((res) => {
+      this.$http.get('../../static/chatData.json').then(res => {
         this.chatDatas = res.data.msgData
         this.setMsg('001')
       })
     },
     // 自动对话
     setMsg (selectId) {
-      this.selectMsgData = this.chatDatas.filter((item) => {
+      this.selectMsgData = this.chatDatas.filter(item => {
         return item.id === selectId
       })[0]
       // 设置leftData
@@ -80,7 +80,7 @@ export default {
 
           // 判断需要展示的数据是否已经全部展示完毕
           if (i >= msgData.length) {
-            this.title = '和Andy聊天中'
+            this.title = '聊天中'
             this.inputDisable = false
             window.clearInterval(interval)
           }
@@ -101,36 +101,42 @@ export default {
     'chat-item': ChatItem
   }
 }
+
 </script>
 
 <style scoped lang="less">
-.navbar {
-  height: 44px;
-  display: flex;
-}
-.navbar-text {
-  margin: 0 auto;
-  line-height: 44px;
-}
-.content {
-  position: absolute;
-  overflow: hidden;
-  top: 44px;
-  bottom: 0;
-  right: 0;
-  left: 0;
-  background: linear-gradient(to bottom, #57b1ff, #c0e2ff);
-}
-.message-content {
-  position: absolute;
-  top: 0;
-  bottom: 45px;
-  width: 100%;
-  overflow-x: hidden;
-  overflow-y: scroll;
-}
-.animated {
-  -webkit-animation-duration: .4s;
-  animation-duration: .4s;
-}
+  .navbar {
+    height: 44px;
+    display: flex;
+  }
+
+  .navbar-text {
+    margin: 0 auto;
+    line-height: 44px;
+  }
+
+  .content {
+    position: absolute;
+    overflow: hidden;
+    top: 44px;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    background: linear-gradient(to bottom, #57b1ff, #c0e2ff);
+  }
+
+  .message-content {
+    position: absolute;
+    top: 0;
+    bottom: 45px;
+    width: 100%;
+    overflow-x: hidden;
+    overflow-y: scroll;
+  }
+
+  .animated {
+    -webkit-animation-duration: 0.4s;
+    animation-duration: 0.4s;
+  }
+
 </style>
