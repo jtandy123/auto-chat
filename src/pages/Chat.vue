@@ -12,12 +12,15 @@
           </li>
         </ul>
       </div>
+
+      <chat-feature :inputDisable="inputDisable" :rightDatas="rightDatas" @onRightSelectMsg="onRightSelectMsg"></chat-feature>
     </div>
   </div>
 </template>
 
 <script>
 import ChatItem from '../components/ChatItem.vue'
+import ChatFeature from '../components/ChatFeature.vue'
 
 export default {
   data () {
@@ -95,26 +98,32 @@ export default {
 
         this.scrollContent()
       }
+    },
+    // 选择要说的话
+    onRightSelectMsg (item) {
+      // 调用setShowMsgDatas放置“我”的聊天数据
+      this.setShowMsgDatas(item.rightMsg, 'right')
+      // 调用setMsg执行“我”的聊天信息对应的自动对话
+      this.setMsg(item.id)
     }
   },
   components: {
-    'chat-item': ChatItem
+    'chat-item': ChatItem,
+    'chat-feature': ChatFeature
   }
 }
 
 </script>
 
 <style scoped lang="less">
-  .navbar {
+.navbar {
     height: 44px;
     display: flex;
   }
-
   .navbar-text {
     margin: 0 auto;
     line-height: 44px;
   }
-
   .content {
     position: absolute;
     overflow: hidden;
@@ -124,7 +133,6 @@ export default {
     left: 0;
     background: linear-gradient(to bottom, #57b1ff, #c0e2ff);
   }
-
   .message-content {
     position: absolute;
     top: 0;
@@ -133,10 +141,9 @@ export default {
     overflow-x: hidden;
     overflow-y: scroll;
   }
-
   .animated {
-    -webkit-animation-duration: 0.4s;
-    animation-duration: 0.4s;
+      -webkit-animation-duration: .4s;
+      animation-duration: .4s;
   }
 
 </style>
